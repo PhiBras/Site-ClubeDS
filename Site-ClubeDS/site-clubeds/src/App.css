@@ -1,3 +1,10 @@
+:root, html {
+  color-scheme: dark;
+}
+html {
+  scroll-padding-top: 90px;
+}
+
 :root {
   --bg: #0A0908;
   --bg-panel: #141210;
@@ -26,9 +33,12 @@ body::before {
 a { color: inherit; }
 img { max-width: 100%; display: block; }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
-h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.01em; }
+h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.01em; color: var(--ink); }
 p { margin: 0; color: var(--ink-soft); }
 ul { margin: 0; padding: 0; }
+
+.logo-img{ height:26px; width:auto; object-fit:contain; }
+.foot-logo .logo-img{ height:22px; }
 
 /* ---- top bar ---- */
 .topbar {
@@ -37,8 +47,6 @@ ul { margin: 0; padding: 0; }
   border-bottom: 1px solid var(--line);
 }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; color: var(--ink); }
-.logo-img{height:26px;width:auto;object-fit:contain;}
-.foot-logo .logo-img{height:22px;}
 .logo .mark { font-family: 'IBM Plex Mono', monospace; color: var(--orange); }
 .topbar-right { display: flex; align-items: center; gap: 18px; }
 .progress-readout { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--ink-soft); letter-spacing: .02em; }
@@ -116,7 +124,6 @@ ul.plain li:before { content: '—'; color: var(--orange); }
 .link-arrow { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-size: 14px; color: var(--orange-bright); text-decoration: none; }
 .link-arrow:hover { text-decoration: underline; }
 
-/* traveler */
 .traveler {
   position: absolute; width: 14px; height: 14px; border-radius: 50%; background: var(--orange);
   box-shadow: 0 0 0 4px var(--orange-dim), 0 0 24px var(--orange-glow);
@@ -124,7 +131,6 @@ ul.plain li:before { content: '—'; color: var(--orange); }
   pointer-events: none;
 }
 
-/* ---- trailhead (hero) ---- */
 .trailhead { padding: 70px 0 40px; text-align: center; position: relative; }
 .trailhead .kicker { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--orange); letter-spacing: .02em; margin-bottom: 18px; }
 .trailhead h1 { font-size: 52px; line-height: 1.12; max-width: 16ch; margin: 0 auto; }
@@ -134,13 +140,12 @@ ul.plain li:before { content: '—'; color: var(--orange); }
 .signpost .post { padding: 20px 28px 0; border-right: 1px solid var(--line); text-align: left; }
 .signpost .post:last-child { border-right: none; }
 .signpost .k { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--orange); }
-.signpost .v { font-size: 15px; margin-top: 5px; }
+.signpost .v { font-size: 15px; margin-top: 5px; color: var(--ink); }
 .start-node {
   width: 16px; height: 16px; border-radius: 50%; background: var(--orange); margin: 0 auto;
   box-shadow: 0 0 0 6px var(--orange-dim), 0 0 30px var(--orange-glow);
 }
 
-/* ---- finish ---- */
 .finish { text-align: center; padding: 70px 0 90px; position: relative; }
 .flag {
   width: 16px; height: 16px; background: var(--orange); margin: 0 auto 26px;
@@ -152,7 +157,6 @@ ul.plain li:before { content: '—'; color: var(--orange); }
 .finish .btn { margin-top: 28px; }
 .finish .dist { margin-top: 36px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-soft); }
 
-/* ---- coordenação people + postcards ---- */
 .people { display: flex; flex-direction: column; gap: 16px; margin-top: 6px; }
 .side-left .people { align-items: flex-end; }
 .person { display: flex; align-items: center; gap: 12px; }
@@ -168,16 +172,14 @@ ul.plain li:before { content: '—'; color: var(--orange); }
   font-size: 8.5px; color: var(--ink-soft);
 }
 
-/* ---- faq ---- */
 .faq-item { border-top: 1px solid var(--line); }
 .side-right .faq-item:first-child { border-top: none; }
-.faq-item summary { list-style: none; cursor: pointer; padding: 14px 0; font-size: 15.5px; display: flex; gap: 10px; align-items: center; }
+.faq-item summary { list-style: none; cursor: pointer; padding: 14px 0; font-size: 15.5px; display: flex; gap: 10px; align-items: center; color: var(--ink); }
 .side-left .faq-item summary { justify-content: flex-end; }
 .faq-item summary::-webkit-details-marker { display: none; }
 .faq-item .icon { color: var(--orange); font-family: 'IBM Plex Mono', monospace; }
 .faq-item .a { font-size: 14px; padding: 0 0 16px; }
 
-/* ---- terminal ---- */
 .mini-terminal {
   max-width: 420px; margin: 34px auto 0; background: #100F0C; border: 1px solid var(--line);
   border-radius: 6px; text-align: left; overflow: hidden;
@@ -191,7 +193,6 @@ ul.plain li:before { content: '—'; color: var(--orange); }
 .caret { display: inline-block; width: 6px; height: 13px; background: var(--orange); vertical-align: -2px; animation: blink 1s step-end infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
-/* ---- mobile drawer ---- */
 .drawer {
   position: fixed; inset: 0; background: rgba(10, 9, 8, .97); z-index: 70; display: flex; flex-direction: column;
   padding: 26px; transform: translateY(-100%); transition: transform .25s;
@@ -208,8 +209,30 @@ ul.plain li:before { content: '—'; color: var(--orange); }
 footer { border-top: 1px solid var(--line); padding: 40px 0; }
 .foot-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; align-items: center; }
 .foot-logo { display: flex; align-items: center; gap: 9px; font-weight: 600; }
-.foot-logo .mark { font-family: 'IBM Plex Mono', monospace; color: var(--orange); }
 footer .cp { font-size: 13px; color: var(--ink-soft); }
+
+/* ---- modal de cadastro ---- */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(10,9,8,.75);backdrop-filter:blur(4px);
+  z-index:90;display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.modal{
+  position:relative;width:100%;max-width:420px;background:var(--bg-panel);
+  border:1px solid var(--line);border-radius:8px;padding:32px;
+  box-shadow:0 0 60px -10px var(--orange-glow);
+}
+.modal-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--ink-soft);font-size:22px;cursor:pointer;line-height:1;}
+.modal-close:hover{color:var(--ink);}
+.modal h2{font-size:22px;margin:6px 0 10px;}
+.modal .desc{font-size:14.5px;margin-bottom:20px;}
+.signup-form{display:flex;flex-direction:column;gap:14px;}
+.signup-form label{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;}
+.signup-form input{
+  background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:10px 12px;
+  color:var(--ink);font-family:'Space Grotesk',sans-serif;font-size:14.5px;
+}
+.signup-form input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-dim);}
+.signup-form input::placeholder{color:var(--ink-soft);opacity:.6;}
 
 @media (max-width: 980px) {
   .sidemap { display: none; }
@@ -236,25 +259,3 @@ footer .cp { font-size: 13px; color: var(--ink-soft); }
   html { scroll-behavior: auto; }
   .caret { animation: none; }
 }
-/* ---- modal de cadastro ---- */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(10,9,8,.75);backdrop-filter:blur(4px);
-  z-index:90;display:flex;align-items:center;justify-content:center;padding:20px;
-}
-.modal{
-  position:relative;width:100%;max-width:420px;background:var(--bg-panel);
-  border:1px solid var(--line);border-radius:8px;padding:32px;
-  box-shadow:0 0 60px -10px var(--orange-glow);
-}
-.modal-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--ink-soft);font-size:22px;cursor:pointer;line-height:1;}
-.modal-close:hover{color:var(--ink);}
-.modal h2{font-size:22px;margin:6px 0 10px;}
-.modal .desc{font-size:14.5px;margin-bottom:20px;}
-.signup-form{display:flex;flex-direction:column;gap:14px;}
-.signup-form label{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;}
-.signup-form input{
-  background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:10px 12px;
-  color:var(--ink);font-family:'Space Grotesk',sans-serif;font-size:14.5px;
-}
-.signup-form input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-dim);}
-.signup-form input::placeholder{color:var(--ink-soft);opacity:.6;}

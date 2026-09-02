@@ -224,23 +224,8 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-            setKmNow(entry.target.dataset.km);
-          }
-        });
-      },
-      { threshold: 0.4 }
-    );
-    const targets = [trailheadRef.current, finishRef.current, ...sectionRefs.current].filter(Boolean);
-    targets.forEach((t) => observer.observe(t));
-    return () => observer.disconnect();
-  }, []);
-
+  // posição do viajante (x/y) + qual checkpoint está ativo — tudo baseado
+  // na mesma linha de referência, então funciona pra seções de qualquer altura
   useEffect(() => {
     function positionX() {
       const node = trailWrapRef.current?.querySelector('.node');
@@ -249,6 +234,7 @@ export default function App() {
       const nodeRect = node.getBoundingClientRect();
       travelerRef.current.style.left = `${nodeRect.left - wrapRect.left + nodeRect.width / 2}px`;
     }
+
     function positionY() {
       if (!trailWrapRef.current || !travelerRef.current) return;
       const rect = trailWrapRef.current.getBoundingClientRect();
@@ -256,9 +242,38 @@ export default function App() {
       const progress = Math.min(1, Math.max(0, (viewCenter - rect.top) / rect.height));
       travelerRef.current.style.top = `${progress * 100}%`;
     }
-    positionX(); positionY();
-    const onScroll = () => positionY();
-    const onResize = () => { positionX(); positionY(); };
+
+    function updateActive() {
+      const doc = document.documentElement;
+      const atBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 4;
+      if (atBottom) {
+        setActiveId('chegada');
+        setKmNow('6.4');
+        return;
+      }
+      const line = window.innerHeight * 0.45;
+      const all = [
+        { id: 'topo', km: '0.0', el: trailheadRef.current },
+        ...CHECKPOINTS.map((cp, i) => ({ id: cp.id, km: cp.km, el: sectionRefs.current[i] })),
+        { id: 'chegada', km: '6.4', el: finishRef.current },
+      ];
+      let current = all[0];
+      for (const item of all) {
+        if (!item.el) continue;
+        const top = item.el.getBoundingClientRect().top;
+        if (top <= line) current = item;
+      }
+      setActiveId(current.id);
+      setKmNow(current.km);
+    }
+
+    positionX();
+    positionY();
+    updateActive();
+
+    const onScroll = () => { positionY(); updateActive(); };
+    const onResize = () => { positionX(); positionY(); updateActive(); };
+
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize);
     return () => {
@@ -324,7 +339,7 @@ export default function App() {
         ))}
       </div>
 
-      <main id="topo">
+      <main>
         <section className="trailhead" id="topo" data-km="0.0" ref={trailheadRef}>
           <div className="wrap">
             <div className="kicker">trilha do clube · km 0.0</div>
